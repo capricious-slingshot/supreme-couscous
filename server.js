@@ -2,6 +2,7 @@ const express = require('express')
 const morgan = require('morgan')
 const campsiteRouter = require('./routes/campsiteRouter')
 const promotionsRouter = require('./routes/promotionsRouter')
+const partnersRouter = require('./routes/partnersRouter')
 
 const hostname = 'localhost'
 const port = 3000;
@@ -14,6 +15,7 @@ app.use(express.json())
 // URL ROOT PATH, ROUTER NAME (file required above)
 app.use('/campsites', campsiteRouter)
 app.use('/promotions', promotionsRouter)
+app.use('/partners', partnersRouter)
 
 //all HTTP methods resquire status code, header, next/end 
 
