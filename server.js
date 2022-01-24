@@ -16,24 +16,8 @@ app.use('/campsites', campsiteRouter)
 
 //QUESTIONS: wtf does res.write do? how is it different from end?
 
-app.get('/campsites/:campsiteId', (req, res) => {
-  res.end(`Will send details of the campsite: ${req.params.campsiteId} to you`)
-})
-
-app.post('/campsites/:campsiteId', (req, res) => {
-  res.end(`PUT opperation not supported on '/campsites/${req.params.campsiteId}`)
-})
-
-app.put('/campsites/:campsiteId', (req, res) => {
-  res.write(`Updating the campsite: ${req.params.campsiteId}\n`)
-  res.end(`PUT opperation not supported on '/campsites/${req.params.campsiteId}`)
-})
-
-app.delete('/campsites/:campsiteId', (req, res) => {
-  res.end(`Deleting campsite: ${req.params.campsiteId}`)
-})
-
-app.use(express.static(__dirname + '/public'))
+//static file directory
+.use(express.static(__dirname + '/public'))
 
 app.use((req, res) => {
     res.statusCode = 200;
