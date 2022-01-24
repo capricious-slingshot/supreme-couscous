@@ -1,6 +1,7 @@
 const express = require('express')
 const morgan = require('morgan')
 const campsiteRouter = require('./routes/campsiteRouter')
+const promotionsRouter = require('./routes/promotionsRouter')
 
 const hostname = 'localhost'
 const port = 3000;
@@ -9,8 +10,10 @@ const app = express()
 app.use(morgan('dev '))
 //middleware that parses json into JS properties of request Obj
 app.use(express.json())
-// provides URL root path for campsites - and the file with HTTP methods required above
+
+// URL ROOT PATH, ROUTER NAME (file required above)
 app.use('/campsites', campsiteRouter)
+app.use('/promotions', promotionsRouter)
 
 //all HTTP methods resquire status code, header, next/end 
 
