@@ -1,5 +1,6 @@
 const express = require('express')
 const morgan = require('morgan')
+const campsiteRouter = require('./routes/campsiteRouter')
 
 const hostname = 'localhost'
 const port = 3000;
@@ -8,52 +9,29 @@ const app = express()
 app.use(morgan('dev '))
 //middleware that parses json into JS properties of request Obj
 app.use(express.json())
+// provides URL root path for campsites - and the file with HTTP methods required above
+app.use('/campsites', campsiteRouter)
 
+//all HTTP methods resquire status code, header, next/end 
 
-//all HTTP methods resquire status code, header, next/end
+//QUESTIONS: wtf does res.write do? how is it different from end?
 
-// catch all for all HTTP verbs
-app.all('/campsites', (req, res, next) => {
-    res.statusCode = 200
-    res.setHeader('Content-Type', 'text/html')
-    //passes control to the next relevant routing method
-    next()
-})
-
-//next possible endpoints - no need for next to be passed
-app.get('/campsites', (req, res) => {
-  //status code and header are inherited from .all method unless otherwise defined
-  res.end('will send all the campsites to you')
-})
 app.get('/campsites/:campsiteId', (req, res) => {
   res.end(`Will send details of the campsite: ${req.params.campsiteId} to you`)
 })
 
-app.post('/campsites', (req, res) => {
-  //status code and header are inherited from .all method unless otherwise defined
-  res.end(`will add the campsite: ${req.body.name} with descripton: ${req.body.description}`)
-})
 app.post('/campsites/:campsiteId', (req, res) => {
   res.end(`PUT opperation not supported on '/campsites/${req.params.campsiteId}`)
 })
- 
-app.put('/campsites', (req, res) => {
-  //status code and header are inherited from .all method unless otherwise defined
-  res.statusCode = 403
-  res.end(`campsite: ${req.body.name} description: ${req.body.description}`)
-})
+
 app.put('/campsites/:campsiteId', (req, res) => {
   res.write(`Updating the campsite: ${req.params.campsiteId}\n`)
   res.end(`PUT opperation not supported on '/campsites/${req.params.campsiteId}`)
 })
 
-app.delete('/campsites', (req, res) => {
-  res.end('Deleting all campsites')
-})
 app.delete('/campsites/:campsiteId', (req, res) => {
   res.end(`Deleting campsite: ${req.params.campsiteId}`)
 })
-
 
 app.use(express.static(__dirname + '/public'))
 
